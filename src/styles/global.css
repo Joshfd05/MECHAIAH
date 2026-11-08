@@ -40,10 +40,7 @@ body {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  background:
-    radial-gradient(900px 520px at 88% -10%, rgba(37, 55, 69, 0.72), transparent 60%),
-    radial-gradient(700px 480px at -10% 110%, rgba(17, 33, 45, 0.85), transparent 55%),
-    var(--ink);
+  background: transparent;
   color: var(--mist);
   font-family: var(--body);
   font-size: 1.05rem;
@@ -59,7 +56,16 @@ body::before {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.28;
+  background: url("/bg-folds.svg") center / cover no-repeat;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.22;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
   background-size: 180px 180px;
   mix-blend-mode: overlay;
