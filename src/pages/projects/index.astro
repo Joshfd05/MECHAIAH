@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectFan from "../../components/ProjectFan.astro";
+import { getProjects } from "../../lib/projects";
+
+const projects = await getProjects();
+---
+
+<BaseLayout
+  title="Projects"
+  description="Selected work from Mechaiah: RuuWear, Workloader, and FlowStock."
+>
+  <header class="page-head">
+    <p class="kicker">Projects</p>
+    <h1>Selected work.</h1>
+    <p class="lede">
+      RuuWear, Workloader, and FlowStock. Move through the cards, then open a case page.
+    </p>
+  </header>
+  <ProjectFan projects={projects} />
+</BaseLayout>

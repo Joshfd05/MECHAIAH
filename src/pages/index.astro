@@ -1,0 +1,144 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectCover from "../components/ProjectCover.astro";
+import { processSteps, serviceLines, site } from "../data/site";
+import { getProjects } from "../lib/projects";
+
+const projects = await getProjects();
+---
+
+<BaseLayout title={site.name} description={site.description}>
+  <section class="hero">
+    <svg class="ribbon" viewBox="0 0 900 640" aria-hidden="true">
+      <defs>
+        <linearGradient id="ribbon-fill" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0" stop-color="#163832" />
+          <stop offset="0.5" stop-color="#235347" />
+          <stop offset="1" stop-color="#8EB69B" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M-60 470C140 410 200 250 360 300C540 356 590 150 820 130"
+        fill="none"
+        stroke="url(#ribbon-fill)"
+        stroke-width="120"
+        stroke-linecap="round"></path>
+    </svg>
+    <div class="hero__glow" aria-hidden="true"></div>
+    <p class="wordmark" aria-hidden="true">{site.name}</p>
+    <div class="hero__copy">
+      <h1 class="hero__title">
+        We design and build<br />
+        business websites<br />
+        and custom software.
+      </h1>
+      <div class="hero__bottom">
+        <div class="hero__actions">
+          <a class="btn" href="/contact">
+            Request a quotation
+            <span class="btn__orb" aria-hidden="true">
+              <svg viewBox="0 0 16 16" width="14" height="14">
+                <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+          </a>
+          <a class="btn btn--ghost" href="/projects">View projects</a>
+        </div>
+        <aside class="do-card">
+          <p class="kicker">What we do</p>
+          <p class="do-card__title">Web development</p>
+          <p>Business sites, shops, landing pages, redesigns, and responsive builds.</p>
+          <p class="do-card__title">Custom software</p>
+          <p>Systems, inventory, dashboards, workflow automation, and APIs.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="services-title">
+    <div class="block__head">
+      <div>
+        <p class="kicker">Services</p>
+        <h2 class="section-title" id="services-title">Two lines of work.</h2>
+      </div>
+      <a class="text-link" href="/services">All services</a>
+    </div>
+    <div class="lines">
+      {
+        serviceLines.map((line) => (
+          <article class="line" id={`home-${line.id}`}>
+            <h3>{line.title}</h3>
+            <p>{line.lede}</p>
+            <ul class="label-list">
+              {line.offerings.map((offering) => (
+                <li>
+                  <a href={`/services#${offering.slug}`}>
+                    {offering.title}
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="work-title">
+    <div class="block__head">
+      <div>
+        <p class="kicker">Projects</p>
+        <h2 class="section-title" id="work-title">Selected work.</h2>
+      </div>
+      <a class="text-link" href="/projects">Open the project fan</a>
+    </div>
+    <div class="preview-grid">
+      {
+        projects.map((project, i) => (
+          <a class="preview-card" href={`/projects/${project.data.slug}`}>
+            <div class="preview-card__media">
+              <ProjectCover motif={project.data.motif} index={String(i + 1).padStart(2, "0")} />
+            </div>
+            <div class="preview-card__body">
+              <h3>{project.data.title}</h3>
+              <p>{project.data.tagline}</p>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="process-title">
+    <div class="block__head">
+      <div>
+        <p class="kicker">Approach</p>
+        <h2 class="section-title" id="process-title">How the work runs.</h2>
+      </div>
+    </div>
+    <div class="process">
+      {
+        processSteps.map((step) => (
+          <article>
+            <span class="process__n">{step.n}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="band-title">
+    <h2 id="band-title">Tell us what you need built.</h2>
+    <a class="btn" href="/contact">
+      Request a quotation
+      <span class="btn__orb" aria-hidden="true">
+        <svg viewBox="0 0 16 16" width="14" height="14">
+          <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </span>
+    </a>
+  </section>
+</BaseLayout>

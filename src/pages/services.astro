@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { processSteps, serviceLines } from "../data/site";
+---
+
+<BaseLayout
+  title="Services"
+  description="Business websites, e-commerce, landing pages, redesigns, and custom software: systems, inventory, dashboards, workflows, and APIs."
+>
+  <header class="page-head">
+    <p class="kicker">Services</p>
+    <h1>What we build.</h1>
+    <p class="lede">
+      Two lines of work. A business website, or the software a business runs on. An engagement can be one of them, or both.
+    </p>
+  </header>
+
+  {
+    serviceLines.map((line) => (
+      <section class="chapter" id={line.id} aria-labelledby={`${line.id}-title`}>
+        <header class="chapter-head">
+          <p class="kicker">{line.index}</p>
+          <h2 id={`${line.id}-title`}>{line.title}</h2>
+          <p class="lede">{line.lede}</p>
+        </header>
+        <div>
+          {line.offerings.map((offering) => (
+            <article class="offer" id={offering.slug}>
+              <h3>{offering.title}</h3>
+              <p>{offering.body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="chapter engagement" id="engagement" aria-labelledby="engagement-title">
+    <header class="chapter-head">
+      <p class="kicker">Engagement</p>
+      <h2 id="engagement-title">How an engagement runs.</h2>
+      <p class="lede">A quotation comes first. These three steps start once the scope is agreed.</p>
+    </header>
+    <div class="process">
+      {
+        processSteps.map((step) => (
+          <article>
+            <span class="process__n">{step.n}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </article>
+        ))
+      }
+    </div>
+    <a class="btn" href="/contact">
+      Request a quotation
+      <span class="btn__orb" aria-hidden="true">
+        <svg viewBox="0 0 16 16" width="14" height="14">
+          <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </span>
+    </a>
+  </section>
+</BaseLayout>

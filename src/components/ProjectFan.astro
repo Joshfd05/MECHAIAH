@@ -1,0 +1,179 @@
+---
+import ProjectCover from "./ProjectCover.astro";
+import { offsetFor, type ProjectEntry } from "../lib/projects";
+
+interface Props {
+  projects: ProjectEntry[];
+}
+
+const { projects } = Astro.props;
+const total = projects.length;
+---
+
+<section class="fan" data-fan aria-roledescription="carousel" aria-label="Selected projects">
+  <div
+    class="fan__stage"
+    tabindex="0"
+    aria-label="Projects. Left and right arrow keys change the featured project."
+  >
+    {
+      projects.map((project, i) => {
+        const offset = offsetFor(0, i, total);
+        const away = Math.abs(offset) > 1;
+        return (
+          <article
+            class="fan__card"
+            data-card
+            data-index={i}
+            data-title={project.data.title}
+            data-tagline={project.data.tagline}
+            data-offset={away ? "away" : String(offset)}
+            aria-hidden={offset === 0 ? "false" : "true"}
+          >
+            <button class="fan__select" type="button" tabindex="-1" data-select={i}>
+              Show {project.data.title}
+            </button>
+            <a class="fan__expand" href={`/projects/${project.data.slug}`} tabindex={offset === 0 ? 0 : -1}>
+              Expand
+              <span class="sr-only">{project.data.title}</span>
+            </a>
+            <div class="fan__media">
+              <ProjectCover motif={project.data.motif} index={String(i + 1).padStart(2, "0")} />
+            </div>
+            <div class="fan__body">
+              <div class="fan__title-row">
+                <h2>{project.data.title}</h2>
+                <p class="fan__count">
+                  {i + 1} / {total}
+                </p>
+              </div>
+              <p class="fan__outcome">{project.data.outcome}</p>
+              <div class="fan__details">
+                <p>{project.data.summary}</p>
+                <p class="fan__role">{project.data.role}</p>
+              </div>
+            </div>
+          </article>
+        );
+      })
+    }
+  </div>
+
+  <div class="fan__dock">
+    <button class="round" type="button" data-prev aria-label="Previous project">
+      <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+        <path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </button>
+    <div class="fan__dock-id">
+      <div class="fan__dock-thumb">
+        {
+          projects.map((project, i) => (
+            <div class="cover-frame" data-thumb-for={i} hidden={i !== 0}>
+              <ProjectCover motif={project.data.motif} />
+            </div>
+          ))
+        }
+      </div>
+      <div>
+        <p class="fan__dock-name" data-name>{projects[0]?.data.title}</p>
+        <p class="fan__dock-tag" data-tag>{projects[0]?.data.tagline}</p>
+      </div>
+    </div>
+    <button class="round" type="button" data-next aria-label="Next project">
+      <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+        <path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </button>
+  </div>
+
+  <nav class="fan__index" aria-label="Project pages">
+    {
+      projects.map((project) => (
+        <a class="text-link" href={`/projects/${project.data.slug}`}>
+          {project.data.title}
+        </a>
+      ))
+    }
+  </nav>
+  <p class="sr-only" aria-live="polite" data-live></p>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-fan]").forEach((root) => {
+    if (root.dataset.ready === "true") return;
+    root.dataset.ready = "true";
+
+    const cards = [...root.querySelectorAll<HTMLElement>("[data-card]")];
+    const total = cards.length;
+    if (!total) return;
+
+    let index = 0;
+    const live = root.querySelector<HTMLElement>("[data-live]");
+    const nameEl = root.querySelector<HTMLElement>("[data-name]");
+    const tagEl = root.querySelector<HTMLElement>("[data-tag]");
+    const prev = root.querySelector<HTMLButtonElement>("[data-prev]");
+    const next = root.querySelector<HTMLButtonElement>("[data-next]");
+
+    const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function render(announce: boolean) {
+      const still = reduced();
+      cards.forEach((card, i) => {
+        let offset = i - index;
+        const half = total / 2;
+        while (offset > half) offset -= total;
+        while (offset < -half) offset += total;
+        const away = !still && Math.abs(offset) > 1;
+        card.dataset.offset = away ? "away" : still ? "0" : String(offset);
+        const active = still || offset === 0;
+        card.setAttribute("aria-hidden", active ? "false" : "true");
+        card.querySelectorAll<HTMLAnchorElement>("a").forEach((link) => {
+          link.tabIndex = active ? 0 : -1;
+        });
+      });
+
+      const current = cards[index];
+      if (!current) return;
+      if (nameEl) nameEl.textContent = current.dataset.title ?? "";
+      if (tagEl) tagEl.textContent = current.dataset.tagline ?? "";
+      root.querySelectorAll<HTMLElement>("[data-thumb-for]").forEach((thumb) => {
+        thumb.hidden = Number(thumb.dataset.thumbFor) !== index;
+      });
+      if (announce && live) {
+        live.textContent = `${current.dataset.title}, ${index + 1} of ${total}`;
+      }
+    }
+
+    function go(delta: number) {
+      const focused = document.activeElement;
+      index = (index + delta + total) % total;
+      render(true);
+      const expand = cards[index]?.querySelector("a");
+      if (expand && focused !== prev && focused !== next && root.contains(focused)) {
+        expand.focus();
+      }
+    }
+
+    prev?.addEventListener("click", () => go(-1));
+    next?.addEventListener("click", () => go(1));
+    root.querySelectorAll<HTMLButtonElement>("[data-select]").forEach((button) => {
+      button.addEventListener("click", () => {
+        index = Number(button.dataset.select);
+        render(true);
+      });
+    });
+    root.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        go(-1);
+      }
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        go(1);
+      }
+    });
+
+    render(false);
+  });
+</script>

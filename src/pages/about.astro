@@ -1,0 +1,67 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { approach, values } from "../data/site";
+---
+
+<BaseLayout
+  title="About"
+  description="Mechaiah is a studio for business websites and custom software. Direct contact, scoped builds, and work you can run."
+>
+  <header class="page-head">
+    <p class="kicker">The studio</p>
+    <h1>One studio. Direct work.</h1>
+    <p class="lede">
+      Mechaiah designs and builds modern web applications, business websites, and custom software. A public site and an internal system are the same kind of work here: something a company can explain, use, and keep.
+    </p>
+  </header>
+
+  <section class="block" aria-labelledby="approach-title">
+    <div class="block__head">
+      <div>
+        <p class="kicker">How we work</p>
+        <h2 class="section-title" id="approach-title">Person, scope, handoff.</h2>
+      </div>
+    </div>
+    <div class="approach-grid">
+      {
+        approach.map((item) => (
+          <article>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="values-title">
+    <div class="block__head">
+      <div>
+        <p class="kicker">Values</p>
+        <h2 class="section-title" id="values-title">Clarity, craft, honest scope.</h2>
+      </div>
+    </div>
+    <div class="value-grid">
+      {
+        values.map((item) => (
+          <article>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="about-band">
+    <h2 id="about-band">Ask for a quotation.</h2>
+    <a class="btn" href="/contact">
+      Request a quotation
+      <span class="btn__orb" aria-hidden="true">
+        <svg viewBox="0 0 16 16" width="14" height="14">
+          <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </span>
+    </a>
+  </section>
+</BaseLayout>
