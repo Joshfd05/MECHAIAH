@@ -1,5 +1,5 @@
 ---
-import { nav, site } from "../data/site";
+import { nav } from "../data/site";
 
 const current = Astro.url.pathname.replace(/\/$/, "") || "/";
 
@@ -11,9 +11,6 @@ function isActive(href: string) {
 
 <header class="site-header">
   <div class="nav-bar">
-    <a class="nav-brand" href="/" aria-label={site.name}>
-      <img src="/brand/mark-on-dark.png" alt="" width="64" height="32" />
-    </a>
     <button
       class="nav-toggle"
       type="button"
