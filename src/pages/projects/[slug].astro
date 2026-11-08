@@ -11,8 +11,10 @@ export async function getStaticPaths() {
   }));
 }
 
-const { project } = Astro.props;
+const { project: routed } = Astro.props;
 const projects = await getProjects();
+const project = projects.find((item) => item.data.slug === routed.data.slug) ?? routed;
+const shots = project.data.shots ?? [];
 const index = projects.findIndex((item) => item.data.slug === project.data.slug);
 const previous = projects[(index - 1 + projects.length) % projects.length];
 const next = projects[(index + 1) % projects.length];
@@ -34,6 +36,19 @@ const position = String(index + 1).padStart(2, "0");
   <div class="case-cover">
     <ProjectCover motif={project.data.motif} index={position} />
   </div>
+
+  {
+    shots.length > 0 && (
+      <div class="case-shots">
+        {shots.map((shot) => (
+          <figure>
+            <img src={shot.src} alt={shot.alt} />
+            <figcaption>{shot.label}</figcaption>
+          </figure>
+        ))}
+      </div>
+    )
+  }
 
   <div class="case-row">
     <h2>The problem</h2>

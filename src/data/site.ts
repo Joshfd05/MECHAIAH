@@ -88,17 +88,17 @@ export const processSteps = [
   {
     n: '01',
     title: 'Scope',
-    text: 'We agree what the work is, who it is for, and what done looks like.',
+    text: 'We\'ll discuss your goals, explore your ideas and build a plan that works for you.',
   },
   {
     n: '02',
     title: 'Build',
-    text: 'The site or the software comes together where you can see it.',
+    text: 'We\'ll build your solution together, keeping you involved through feedback and updates along the way.',
   },
   {
     n: '03',
     title: 'Handoff',
-    text: 'You leave with the work, the notes, and the access to run it.',
+    text: 'We\'ll deliver your finished project, along with the access and guidance you need to get started.',
   },
 ] as const;
 

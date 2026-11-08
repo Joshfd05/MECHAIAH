@@ -14,6 +14,15 @@ const projects = defineCollection({
     built: z.string(),
     stack: z.array(z.string()).default([]),
     url: z.string().optional(),
+    shots: z
+      .array(
+        z.object({
+          src: z.string(),
+          alt: z.string(),
+          label: z.string(),
+        }),
+      )
+      .default([]),
     order: z.number(),
     motif: z.enum(['wear', 'work', 'stock']),
   }),
