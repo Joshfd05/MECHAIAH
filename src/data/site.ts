@@ -1,11 +1,19 @@
-// Public contact address. Change this when the studio inbox is ready.
+// Public contact address.
 export const site = {
   name: 'Mechaiah',
-  email: 'hello@mechaiah.com',
+  email: 'hellomechaiah@gmail.com',
   description:
     'Mechaiah designs and builds business websites and custom software.',
   sentence: 'We design and build business websites and custom software.',
 };
+
+export function gmailTo(address = site.email) {
+  const url = new URL('https://mail.google.com/mail/');
+  url.searchParams.set('view', 'cm');
+  url.searchParams.set('fs', '1');
+  url.searchParams.set('to', address);
+  return url.href;
+}
 
 export const nav = [
   { href: '/', label: 'Home', cta: false },
