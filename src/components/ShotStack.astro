@@ -95,9 +95,20 @@ function offsetFor(index: number, count: number) {
       document.documentElement.style.overflow = "";
     }
 
+    let pending = 0;
+
     items.forEach((item, index) => {
-      item.addEventListener("click", () => {
+      item.addEventListener("click", (event) => {
+        if (item.dataset.offset === "away" || event.detail > 1) return;
+        window.clearTimeout(pending);
+        pending = window.setTimeout(() => {
+          if (item.dataset.offset !== "0") select(index);
+        }, 280);
+      });
+
+      item.addEventListener("dblclick", () => {
         if (item.dataset.offset === "away") return;
+        window.clearTimeout(pending);
         if (item.dataset.offset !== "0") select(index);
         open(item);
       });
