@@ -40,8 +40,8 @@ function paragraphs(text: string) {
     <div class="case-title">
       {
         project.data.slug === "ruuwear" && (
-          <span class="case-mark">
-            <img src="/projects/ruuwear-mark.png" alt="" width="1168" height="1168" />
+          <span class="case-mark case-mark--wear">
+            <img src="/projects/ruuwear-mark.png" alt="" width="1040" height="1040" />
           </span>
         )
       }
@@ -66,10 +66,12 @@ function paragraphs(text: string) {
   }
 
   {
-    project.data.slug === "workloader" && shots.length > 0 && <ShotStack shots={shots} />
+    (project.data.slug === "workloader" || project.data.slug === "ruuwear") && shots.length > 0 && (
+      <ShotStack shots={shots} />
+    )
   }
   {
-    project.data.slug !== "workloader" && shots.length > 0 && (
+    project.data.slug !== "workloader" && project.data.slug !== "ruuwear" && shots.length > 0 && (
       <div class="case-shots">
         {shots.map((shot) => (
           <figure>
