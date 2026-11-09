@@ -19,6 +19,13 @@ const index = projects.findIndex((item) => item.data.slug === project.data.slug)
 const previous = projects[(index - 1 + projects.length) % projects.length];
 const next = projects[(index + 1) % projects.length];
 const position = String(index + 1).padStart(2, "0");
+
+function paragraphs(text: string) {
+  return text
+    .split(/\n\s*\n/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+}
 ---
 
 <BaseLayout
@@ -29,13 +36,26 @@ const position = String(index + 1).padStart(2, "0");
     <p class="kicker">
       <a class="text-link" href="/projects">All projects</a>
     </p>
-    <h1>{project.data.title}</h1>
-    <p class="lede">{project.data.tagline}. {project.data.outcome}</p>
+    <div class="case-title">
+      {
+        project.data.slug === "ruuwear" && (
+          <span class="case-mark">
+            <img src="/projects/ruuwear-mark.png" alt="" width="1168" height="1168" />
+          </span>
+        )
+      }
+      <h1>{project.data.title}</h1>
+    </div>
+    <p class="lede">{project.data.lede ?? `${project.data.tagline}. ${project.data.outcome}`}</p>
   </header>
 
-  <div class="case-cover">
-    <ProjectCover motif={project.data.motif} index={position} />
-  </div>
+  {
+    project.data.slug !== "ruuwear" && (
+      <div class="case-cover">
+        <ProjectCover motif={project.data.motif} index={position} />
+      </div>
+    )
+  }
 
   {
     shots.length > 0 && (
@@ -52,28 +72,20 @@ const position = String(index + 1).padStart(2, "0");
 
   <div class="case-row">
     <h2>The problem</h2>
-    <p>{project.data.problem}</p>
+    <div>
+      {paragraphs(project.data.problem).map((paragraph) => <p>{paragraph}</p>)}
+    </div>
   </div>
   <div class="case-row">
     <h2>What was built</h2>
-    <p>{project.data.built}</p>
+    <div>
+      {paragraphs(project.data.built).map((paragraph) => <p>{paragraph}</p>)}
+    </div>
   </div>
   <div class="case-row">
     <h2>Role</h2>
     <p>{project.data.role}. {project.data.summary}</p>
   </div>
-  {
-    project.data.stack.length > 0 && (
-      <div class="case-row">
-        <h2>Stack</h2>
-        <ul class="stack-list">
-          {project.data.stack.map((item) => (
-            <li>{item}</li>
-          ))}
-        </ul>
-      </div>
-    )
-  }
   {
     project.data.url && (
       <div class="case-row">
