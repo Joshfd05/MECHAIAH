@@ -21,6 +21,7 @@ const projects = defineCollection({
           src: z.string(),
           alt: z.string(),
           label: z.string(),
+          note: z.string().optional(),
         }),
       )
       .default([]),

@@ -1,0 +1,113 @@
+---
+interface Shot {
+  src: string;
+  alt: string;
+  label: string;
+  note?: string;
+}
+
+interface Props {
+  shots: Shot[];
+}
+
+const { shots } = Astro.props;
+
+function offsetFor(index: number, count: number) {
+  let offset = index;
+  const half = count / 2;
+  while (offset > half) offset -= count;
+  while (offset < -half) offset += count;
+  return offset;
+}
+---
+
+<div class="shot-stack" data-shot-stack>
+  {
+    shots.map((shot, index) => {
+      const offset = offsetFor(index, shots.length);
+      const away = Math.abs(offset) > 2;
+      return (
+        <button
+          class="shot-stack__item"
+          type="button"
+          data-shot
+          data-offset={away ? "away" : String(offset)}
+          aria-pressed={offset === 0 ? "true" : "false"}
+          aria-hidden={away ? "true" : "false"}
+          aria-label={`${shot.label}. ${shot.note ?? shot.alt}`}
+          tabindex={away ? -1 : 0}
+        >
+          <img src={shot.src} alt="" />
+          <span class="shot-stack__copy">
+            <strong>{shot.label}</strong>
+            {shot.note && <span>{shot.note}</span>}
+          </span>
+        </button>
+      );
+    })
+  }
+</div>
+
+<div class="shot-lightbox" data-shot-lightbox hidden>
+  <button class="shot-lightbox__backdrop" type="button" aria-label="Close screenshot"></button>
+  <img alt="" />
+</div>
+
+<script>
+  function offsetFor(index: number, selected: number, count: number) {
+    let offset = index - selected;
+    const half = count / 2;
+    while (offset > half) offset -= count;
+    while (offset < -half) offset += count;
+    return offset;
+  }
+
+  function bindStack(root: HTMLElement) {
+    const lightbox = root.nextElementSibling as HTMLElement | null;
+    const frame = lightbox?.querySelector("img");
+    const backdrop = lightbox?.querySelector(".shot-lightbox__backdrop");
+    const items = [...root.querySelectorAll<HTMLButtonElement>("[data-shot]")];
+    if (!lightbox || !frame) return;
+
+    function select(selected: number) {
+      items.forEach((item, index) => {
+        const offset = offsetFor(index, selected, items.length);
+        const away = Math.abs(offset) > 2;
+        item.dataset.offset = away ? "away" : String(offset);
+        item.setAttribute("aria-pressed", offset === 0 ? "true" : "false");
+        item.setAttribute("aria-hidden", away ? "true" : "false");
+        item.tabIndex = away ? -1 : 0;
+      });
+    }
+
+    function open(item: HTMLButtonElement) {
+      const source = item.querySelector("img");
+      if (!source) return;
+      frame.src = source.src;
+      frame.alt = item.getAttribute("aria-label") ?? "";
+      lightbox.hidden = false;
+      document.documentElement.style.overflow = "hidden";
+    }
+
+    function close() {
+      lightbox.hidden = true;
+      frame.removeAttribute("src");
+      document.documentElement.style.overflow = "";
+    }
+
+    items.forEach((item, index) => {
+      item.addEventListener("click", () => {
+        if (item.dataset.offset === "away") return;
+        if (item.dataset.offset !== "0") select(index);
+        open(item);
+      });
+    });
+
+    backdrop?.addEventListener("click", close);
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !lightbox.hidden) close();
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>("[data-shot-stack]").forEach(bindStack);
+</script>

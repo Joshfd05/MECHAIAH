@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProjectCover from "../../components/ProjectCover.astro";
+import ShotStack from "../../components/ShotStack.astro";
 import { getProjects } from "../../lib/projects";
 
 export async function getStaticPaths() {
@@ -44,13 +45,20 @@ function paragraphs(text: string) {
           </span>
         )
       }
+      {
+        project.data.slug === "workloader" && (
+          <span class="case-mark case-mark--work">
+            <img src="/projects/workloader-mark.png" alt="" width="1040" height="1040" />
+          </span>
+        )
+      }
       <h1>{project.data.title}</h1>
     </div>
     <p class="lede">{project.data.lede ?? `${project.data.tagline}. ${project.data.outcome}`}</p>
   </header>
 
   {
-    project.data.slug !== "ruuwear" && (
+    project.data.slug !== "ruuwear" && project.data.slug !== "workloader" && (
       <div class="case-cover">
         <ProjectCover motif={project.data.motif} index={position} />
       </div>
@@ -58,7 +66,10 @@ function paragraphs(text: string) {
   }
 
   {
-    shots.length > 0 && (
+    project.data.slug === "workloader" && shots.length > 0 && <ShotStack shots={shots} />
+  }
+  {
+    project.data.slug !== "workloader" && shots.length > 0 && (
       <div class="case-shots">
         {shots.map((shot) => (
           <figure>
