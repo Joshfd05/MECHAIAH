@@ -4,6 +4,7 @@ import ProjectCover from "../../components/ProjectCover.astro";
 import ResponsiveImage from "../../components/ResponsiveImage.astro";
 import ShotStack from "../../components/ShotStack.astro";
 import ruuwearMark from "../../assets/projects/ruuwear-mark.png";
+import flowstockMark from "../../assets/projects/Flowstock.png";
 import workloaderMark from "../../assets/projects/workloader-mark.png";
 import { getProjects } from "../../lib/projects";
 
@@ -46,6 +47,21 @@ function paragraphs(text: string) {
           <span class="case-mark case-mark--wear">
             <ResponsiveImage
               src={ruuwearMark}
+              alt=""
+              widths={[128, 256, 384]}
+              sizes="(max-width: 720px) 14vw, 102px"
+              quality={90}
+              avifQuality={68}
+              loading="eager"
+            />
+          </span>
+        )
+      }
+      {
+        project.data.slug === "flowstock" && (
+          <span class="case-mark case-mark--stock">
+            <ResponsiveImage
+              src={flowstockMark}
               alt=""
               widths={[128, 256, 384]}
               sizes="(max-width: 720px) 14vw, 102px"
@@ -100,7 +116,11 @@ function paragraphs(text: string) {
   </div>
   <div class="case-row">
     <h2>Role</h2>
-    <p>{project.data.role}. {project.data.summary}</p>
+    <p>
+      {project.data.role.trim().endsWith(".")
+        ? project.data.role
+        : `${project.data.role}. ${project.data.summary}`}
+    </p>
   </div>
   {
     project.data.url && (

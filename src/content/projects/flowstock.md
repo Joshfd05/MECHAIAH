@@ -1,15 +1,14 @@
 ---
-# Placeholders still open: role, problem, built, stack, url, lede.
-# Replace those when the brief, the stack, and a public link can be shared.
 title: FlowStock
 slug: flowstock
 tagline: Selected work
 outcome: Stock, trips, and the bills written from the truck
-role: Selected work
+role: "Mechaiah handled the product design and the full build for Jayodya Distributors: the mobile app, the database, role-based access, and billing with PDF export."
 summary: The owner sees stock, active trips, and what needs restocking. The rep sees that trip and writes bills from the truck.
-problem: The brief is not on this page yet. This is where it goes — who the work was for, and what it had to do.
-built: What shipped, beyond the screens above, is not written here yet. The stack and a live link go here when they can be shared.
-stack: []
+problem: Jayodya Distributors in Pannala delivers to shops by truck, and they used to track stock, truck loads and bills on paper. That made it hard to know what was in the warehouse, what was on each truck and what each shop owed. They needed one simple system that works on the Android phones their reps already carry.
+built: |-
+  Flowstock was designed specially for Jayodya Distributors. It's a stock and route-billing app with two views behind one sign-in, and each user's role decides which one they see. The owner sees a dashboard with low-stock alerts and manages items, shops and stock. They also create delivery trips, load stock onto trucks, track what's sold and process returns. Reps see their active trip and the stock on their truck, and they bill shops on the spot. Every bill is numbered automatically and can be printed as a PDF.
+
 order: 1
 motif: stock
 shots:

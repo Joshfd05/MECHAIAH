@@ -68,7 +68,9 @@ const total = projects.length;
               <p class="fan__outcome">{project.data.outcome}</p>
               <div class="fan__details">
                 <p>{project.data.summary}</p>
-                <p class="fan__role">{project.data.role}</p>
+                <p class="fan__role">
+                  {project.data.role.length < 90 ? project.data.role : project.data.tagline}
+                </p>
               </div>
             </div>
           </article>
