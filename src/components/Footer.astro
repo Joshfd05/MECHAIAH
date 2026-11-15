@@ -1,5 +1,5 @@
 ---
-import { nav, site, gmailTo } from "../data/site";
+import { nav, site } from "../data/site";
 
 const year = new Date().getFullYear();
 ---
@@ -20,6 +20,15 @@ const year = new Date().getFullYear();
   </nav>
   <div>
     <a href={`mailto:${site.email}`}>{site.email}</a>
+    <nav class="footer__social" aria-label="Social">
+      {
+        site.socials.map((item) => (
+          <a href={item.href} target="_blank" rel="noopener noreferrer">
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
     <p class="footer__meta">© {year}</p>
   </div>
 </footer>

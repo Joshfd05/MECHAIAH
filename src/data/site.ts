@@ -5,6 +5,10 @@ export const site = {
   description:
     'Mechaiah designs and builds business websites and custom software.',
   sentence: 'We design and build business websites and custom software.',
+  socials: [
+    { label: 'Instagram', href: 'https://www.instagram.com/mecha.iah/' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/company/mechaiah/' },
+  ],
 };
 
 export function gmailTo(address = site.email) {

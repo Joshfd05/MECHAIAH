@@ -28,6 +28,7 @@ const jsonLd = {
   description: site.description,
   email: site.email,
   url: Astro.site?.href ?? canonical.origin,
+  sameAs: site.socials.map((item) => item.href),
 };
 ---
 

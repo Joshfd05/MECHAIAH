@@ -1342,6 +1342,13 @@ h3 {
   margin-top: 1rem;
 }
 
+.direct-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+  margin-top: 0.75rem;
+}
+
 .hp {
   position: absolute;
   left: -9999px;
@@ -1376,13 +1383,19 @@ h3 {
   margin-top: 0.3rem;
 }
 
-.footer__nav {
+.footer__nav,
+.footer__social {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem 1rem;
 }
 
-.footer__nav a {
+.footer__social {
+  margin-top: 0.75rem;
+}
+
+.footer__nav a,
+.footer__social a {
   text-decoration: none;
 }
 
@@ -1454,8 +1467,10 @@ h3 {
     gap: 0.15rem;
     position: absolute;
     top: calc(100% + 0.55rem);
-    left: 0;
-    right: 0;
+    left: 50%;
+    width: max-content;
+    min-width: 12.5rem;
+    transform: translateX(-50%);
     flex-direction: column;
     align-items: stretch;
     padding: 0.45rem;
@@ -1471,7 +1486,9 @@ h3 {
   }
 
   .nav__link {
-    padding: 0.8rem 0.9rem;
+    padding: 0.8rem 1.15rem;
+    text-align: center;
+    white-space: nowrap;
   }
 }
 
