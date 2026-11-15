@@ -1,18 +1,41 @@
 ---
+import ResponsiveImage from "./ResponsiveImage.astro";
+import ruuwear from "../assets/projects/ruuwear.png";
+import workloader from "../assets/projects/workloader.png";
+
 interface Props {
   motif: "wear" | "work" | "stock";
   index?: string;
+  priority?: boolean;
+  loading?: "eager" | "lazy";
+  sizes?: string;
 }
 
-const { motif, index } = Astro.props;
+const {
+  motif,
+  index,
+  priority = false,
+  loading,
+  sizes = "(max-width: 980px) calc(100vw - 2rem), 560px",
+} = Astro.props;
+
+const cover = motif === "wear" ? ruuwear : motif === "work" ? workloader : null;
 ---
 
 <div class="cover" data-motif={motif}>
   {
-    motif === "wear" && <img src="/projects/ruuwear.png" alt="" />
-  }
-  {
-    motif === "work" && <img src="/projects/workloader.png" alt="" />
+    cover && (
+      <ResponsiveImage
+        src={cover}
+        alt=""
+        widths={[160, 480, 800, 1200]}
+        sizes={sizes}
+        quality={90}
+        avifQuality={68}
+        priority={priority}
+        loading={loading}
+      />
+    )
   }
   {
     motif === "stock" && (

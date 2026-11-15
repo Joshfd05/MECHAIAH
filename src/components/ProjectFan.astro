@@ -50,7 +50,13 @@ const total = projects.length;
               </span>
             </div>
             <div class="fan__media">
-              <ProjectCover motif={project.data.motif} index={String(i + 1).padStart(2, "0")} />
+              <ProjectCover
+                motif={project.data.motif}
+                index={String(i + 1).padStart(2, "0")}
+                priority={i === 0}
+                loading={Math.abs(offset) <= 1 ? "eager" : "lazy"}
+                sizes="(max-width: 720px) 82vw, 400px"
+              />
             </div>
             <div class="fan__body">
               <div class="fan__title-row">
@@ -82,7 +88,11 @@ const total = projects.length;
         {
           projects.map((project, i) => (
             <div class="cover-frame" data-thumb-for={i} hidden={i !== 0}>
-              <ProjectCover motif={project.data.motif} />
+              <ProjectCover
+                motif={project.data.motif}
+                sizes="52px"
+                loading={i === 0 ? "eager" : "lazy"}
+              />
             </div>
           ))
         }

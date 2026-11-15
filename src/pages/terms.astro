@@ -1,0 +1,72 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+---
+
+<BaseLayout
+  title="Terms"
+  description="Terms for work with Mechaiah, a software studio in Sri Lanka. Payments are by bank transfer. Contracts follow Sri Lankan law."
+>
+  <header class="page-head page-head--copy">
+    <p class="kicker">Terms</p>
+    <h1>Terms of work.</h1>
+    <p class="lede">
+      These terms cover work you ask {site.name} to do. Last updated 15 November 2026.
+    </p>
+  </header>
+
+  <div class="legal">
+    <section>
+      <h2>The studio</h2>
+      <p>
+        {site.name} is a software development studio in Sri Lanka. Write to
+        <a href={`mailto:${site.email}`}>{site.email}</a> about a project or these terms.
+      </p>
+    </section>
+
+    <section>
+      <h2>A request is not the job</h2>
+      <p>
+        Sending the quotation form, or writing to us, is a request. A quotation is an offer for a particular scope. Work starts when we both agree that scope.
+      </p>
+    </section>
+
+    <section>
+      <h2>What is included</h2>
+      <p>
+        Each engagement is written down: what is included, what is left out, and what done means. Something that is not in that scope is not part of the job.
+      </p>
+      <p>
+        When the work is finished, you receive the website or the software, with the access and the notes that go with it.
+      </p>
+    </section>
+
+    <section>
+      <h2>Payment</h2>
+      <p>
+        Project payments are made by bank transfer, on the terms written in the quotation or the scope.
+      </p>
+    </section>
+
+    <section>
+      <h2>This website</h2>
+      <p>
+        The pages describe the studio and selected work. A page is not a promise that a particular feature, date, or price applies to your project until it is in an agreed scope.
+      </p>
+    </section>
+
+    <section>
+      <h2>Law</h2>
+      <p>
+        Contracts with {site.name} are governed by the laws of Sri Lanka.
+      </p>
+    </section>
+
+    <section>
+      <h2>Your information</h2>
+      <p>
+        How we handle what you send through the form is in the <a href="/privacy">privacy policy</a>.
+      </p>
+    </section>
+  </div>
+</BaseLayout>

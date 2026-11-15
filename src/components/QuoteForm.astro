@@ -2,7 +2,7 @@
 import { budgets, site, streams, timelines } from "../data/site";
 
 const key = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "";
-const redirectTo = new URL("/contact?sent=1", Astro.url.origin).href;
+const redirectTo = new URL("/contact?sent=1", Astro.site ?? Astro.url).href;
 const sent = Astro.url.searchParams.get("sent") === "1";
 ---
 
@@ -85,6 +85,8 @@ const sent = Astro.url.searchParams.get("sent") === "1";
         ? `Requests are sent to ${site.email}. You will get a reply with questions or a quote.`
         : `The form host is not connected yet. Until it is, email ${site.email} with the same details.`
     }
+    {" "}
+    <a class="text-link" href="/privacy">Privacy policy</a>.
   </p>
   <button class="btn" type="submit">
     Request a quotation
