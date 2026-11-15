@@ -1,0 +1,70 @@
+---
+import { getImage, type ImageMetadata } from 'astro:assets';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  widths: number[];
+  sizes: string;
+  quality?: number;
+  avifQuality?: number;
+  priority?: boolean;
+  loading?: 'eager' | 'lazy';
+  lightbox?: boolean;
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  widths,
+  sizes,
+  quality = 85,
+  avifQuality = 62,
+  priority = false,
+  loading,
+  lightbox = false,
+  class: className,
+} = Astro.props;
+
+const outWidths = [
+  ...new Set(widths.map((width) => Math.min(Math.round(width), src.width)).filter((width) => width >= 1)),
+].sort((a, b) => a - b);
+
+async function encode(format: 'avif' | 'webp', encodeQuality: number) {
+  return Promise.all(
+    outWidths.map((width) => getImage({ src, width, format, quality: encodeQuality })),
+  );
+}
+
+const [avif, webp] = await Promise.all([encode('avif', avifQuality), encode('webp', quality)]);
+
+const avifSrcset = avif.map((image, index) => `${image.src} ${outWidths[index]}w`).join(', ');
+const webpSrcset = webp.map((image, index) => `${image.src} ${outWidths[index]}w`).join(', ');
+const fallback = webp[webp.length - 1];
+
+const fullWidth = Math.min(src.width, 1920);
+const full =
+  lightbox && fallback
+    ? await getImage({ src, width: fullWidth, format: 'webp', quality: Math.max(quality, 86) })
+    : null;
+
+const load = priority ? 'eager' : (loading ?? 'lazy');
+---
+
+<picture class={className}>
+  <source type="image/avif" srcset={avifSrcset} sizes={sizes} />
+  <source type="image/webp" srcset={webpSrcset} sizes={sizes} />
+  <img
+    src={fallback?.src}
+    srcset={webpSrcset}
+    sizes={sizes}
+    alt={alt}
+    width={src.width}
+    height={src.height}
+    loading={load}
+    fetchpriority={priority ? 'high' : 'auto'}
+    decoding="async"
+    data-full={full?.src}
+  />
+</picture>

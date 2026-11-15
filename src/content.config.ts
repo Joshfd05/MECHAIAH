@@ -14,6 +14,8 @@ const projects = defineCollection({
     built: z.string(),
     stack: z.array(z.string()).default([]),
     url: z.string().optional(),
+    urlLabel: z.string().optional(),
+    published: z.boolean().default(true),
     lede: z.string().optional(),
     shots: z
       .array(

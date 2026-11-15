@@ -1,5 +1,7 @@
 ---
-import { nav, site, gmailTo } from "../data/site";
+import ResponsiveImage from "./ResponsiveImage.astro";
+import logo from "../assets/brand/logo-on-dark.png";
+import { nav, site } from "../data/site";
 
 const year = new Date().getFullYear();
 ---
@@ -7,7 +9,16 @@ const year = new Date().getFullYear();
 <footer class="site-footer">
   <div>
     <a class="footer__logo" href="/" aria-label={site.name}>
-      <img src="/brand/logo-on-dark.png" alt="" width="176" height="113" />
+      <ResponsiveImage
+        class="footer-logo"
+        src={logo}
+        alt=""
+        widths={[176, 352, 528]}
+        sizes="176px"
+        quality={90}
+        avifQuality={68}
+        loading="lazy"
+      />
     </a>
     <p class="footer__line">Websites and custom software, scoped and handed over.</p>
   </div>
@@ -17,6 +28,8 @@ const year = new Date().getFullYear();
         <a href={item.href}>{item.label}</a>
       ))
     }
+    <a href="/privacy">Privacy</a>
+    <a href="/terms">Terms</a>
   </nav>
   <div>
     <a href={`mailto:${site.email}`}>{site.email}</a>
