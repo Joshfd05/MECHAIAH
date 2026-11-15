@@ -670,6 +670,15 @@ h3 {
   background: #193b2f;
 }
 
+.cover[data-motif="stock"] {
+  background: #eef1f6;
+}
+
+.cover[data-motif="stock"] img {
+  object-fit: cover;
+  object-position: top center;
+}
+
 .cover picture,
 .case-mark picture {
   display: block;
@@ -991,6 +1000,17 @@ h3 {
   font-size: 0.9rem;
 }
 
+.coming-note {
+  margin-top: 1.75rem;
+  max-width: 42rem;
+  color: var(--mist-soft);
+}
+
+.coming-note a {
+  margin-left: 0.28em;
+  color: var(--mist);
+}
+
 .shot-stack {
   position: relative;
   height: 360px;
@@ -1044,6 +1064,37 @@ h3 {
   opacity: 0;
   pointer-events: none;
   z-index: 0;
+}
+
+.shot-stack--portrait {
+  height: 520px;
+}
+
+.shot-stack--portrait .shot-stack__item {
+  width: min(210px, 32vw);
+  aspect-ratio: 1082 / 2402;
+  background: #f4f6fb;
+}
+
+.shot-stack--portrait .shot-stack__item[data-offset="1"] {
+  transform: translate(calc(-50% + 78%), -50%) rotateY(-32deg) scale(0.92);
+}
+
+.shot-stack--portrait .shot-stack__item[data-offset="-1"] {
+  transform: translate(calc(-50% - 78%), -50%) rotateY(32deg) scale(0.92);
+}
+
+.shot-stack--portrait .shot-stack__item[data-offset="2"] {
+  transform: translate(calc(-50% + 138%), -50%) rotateY(-62deg) scale(0.88);
+}
+
+.shot-stack--portrait .shot-stack__item[data-offset="-2"] {
+  transform: translate(calc(-50% - 138%), -50%) rotateY(62deg) scale(0.88);
+}
+
+.shot-stack--portrait .shot-stack__item::after {
+  height: 9.5rem;
+  background: linear-gradient(to top, #06141b 0 3.8rem, transparent 9.5rem);
 }
 
 .shot-stack__item picture {
@@ -1195,6 +1246,16 @@ h3 {
 
   .shot-stack__item[data-offset="away"] {
     display: none;
+  }
+
+  .shot-stack--portrait .shot-stack__item,
+  .shot-stack--portrait .shot-stack__item[data-offset="0"],
+  .shot-stack--portrait .shot-stack__item[data-offset="1"],
+  .shot-stack--portrait .shot-stack__item[data-offset="-1"],
+  .shot-stack--portrait .shot-stack__item[data-offset="2"],
+  .shot-stack--portrait .shot-stack__item[data-offset="-2"] {
+    width: min(360px, 100%);
+    aspect-ratio: 1082 / 2402;
   }
 }
 
@@ -1521,6 +1582,7 @@ h3 {
     flex-direction: column;
     align-items: start;
   }
+
 }
 
 @media (max-width: 860px) {
@@ -1582,6 +1644,15 @@ h3 {
     width: min(280px, 74vw);
     height: auto;
     aspect-ratio: 16 / 9;
+  }
+
+  .shot-stack--portrait {
+    height: 480px;
+  }
+
+  .shot-stack--portrait .shot-stack__item {
+    width: min(180px, 48vw);
+    aspect-ratio: 1082 / 2402;
   }
 
   .shot-stack__item[data-offset="1"] {

@@ -19,6 +19,12 @@ export function gmailTo(address = site.email) {
   return url.href;
 }
 
+export const comingSoon = {
+  name: 'RuuWear',
+  href: 'https://ruuwear.lk',
+  label: 'ruuwear.lk',
+} as const;
+
 export const nav = [
   { href: '/', label: 'Home', cta: false },
   { href: '/services', label: 'Services', cta: false },

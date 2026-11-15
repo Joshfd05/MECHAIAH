@@ -2,6 +2,7 @@
 import ResponsiveImage from "./ResponsiveImage.astro";
 import ruuwear from "../assets/projects/ruuwear.png";
 import workloader from "../assets/projects/workloader.png";
+import flowstock from "../assets/projects/Flowstock Screenshots/admin/03-dashboard.png";
 
 interface Props {
   motif: "wear" | "work" | "stock";
@@ -19,54 +20,19 @@ const {
   sizes = "(max-width: 980px) calc(100vw - 2rem), 560px",
 } = Astro.props;
 
-const cover = motif === "wear" ? ruuwear : motif === "work" ? workloader : null;
+const cover = motif === "wear" ? ruuwear : motif === "work" ? workloader : flowstock;
 ---
 
 <div class="cover" data-motif={motif}>
-  {
-    cover && (
-      <ResponsiveImage
-        src={cover}
-        alt=""
-        widths={[160, 480, 800, 1200]}
-        sizes={sizes}
-        quality={90}
-        avifQuality={68}
-        priority={priority}
-        loading={loading}
-      />
-    )
-  }
-  {
-    motif === "stock" && (
-      <svg viewBox="0 0 640 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <rect width="640" height="420" fill="#11212D" />
-        <path
-          d="M96 300C150 300 170 150 250 146c86-4 96 150 176 146 74-4 90-150 150-120"
-          fill="none"
-          stroke="#CCD0CF"
-          stroke-width="8"
-          stroke-linecap="round"
-        />
-        <g fill="#253745">
-          <circle cx="96" cy="110" r="16" />
-          <circle cx="176" cy="110" r="16" />
-          <circle cx="336" cy="110" r="16" />
-          <circle cx="496" cy="110" r="16" />
-          <circle cx="176" cy="210" r="16" />
-          <circle cx="416" cy="210" r="16" />
-          <circle cx="96" cy="310" r="16" />
-          <circle cx="336" cy="310" r="16" />
-          <circle cx="496" cy="310" r="16" />
-        </g>
-        <g fill="#9BA8AB">
-          <circle cx="96" cy="300" r="22" />
-          <circle cx="250" cy="146" r="22" />
-          <circle cx="426" cy="292" r="22" />
-          <circle cx="572" cy="172" r="22" />
-        </g>
-      </svg>
-    )
-  }
+  <ResponsiveImage
+    src={cover}
+    alt=""
+    widths={[160, 480, 800, 1200]}
+    sizes={sizes}
+    quality={90}
+    avifQuality={68}
+    priority={priority}
+    loading={loading}
+  />
   {index && <span class="cover__index">{index}</span>}
 </div>

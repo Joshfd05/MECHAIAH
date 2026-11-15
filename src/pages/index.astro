@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import ProjectCover from "../components/ProjectCover.astro";
 import ResponsiveImage from "../components/ResponsiveImage.astro";
 import logo from "../assets/brand/logo-on-dark.png";
-import { processSteps, serviceLines, site } from "../data/site";
+import { comingSoon, processSteps, serviceLines, site } from "../data/site";
 import { getProjects } from "../lib/projects";
 
 const projects = await getProjects();
@@ -96,6 +96,9 @@ const projects = await getProjects();
         ))
       }
     </div>
+    <p class="coming-note">
+      {comingSoon.name} is coming soon at<a href={comingSoon.href}>{comingSoon.label}</a>.
+    </p>
   </section>
 
   <section class="block" aria-labelledby="process-title">

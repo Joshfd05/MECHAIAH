@@ -1,6 +1,9 @@
 ---
+# Hidden until the shop is live. The projects fan, home cards, and case page
+# stay off the site. The coming-soon line points at ruuwear.lk.
 title: RuuWear
 slug: ruuwear
+published: false
 tagline: Selected work
 outcome: A shop of its own, launching soon at ruuwear.lk
 role: Selected work for Mechaiah

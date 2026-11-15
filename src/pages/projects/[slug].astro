@@ -5,7 +5,6 @@ import ResponsiveImage from "../../components/ResponsiveImage.astro";
 import ShotStack from "../../components/ShotStack.astro";
 import ruuwearMark from "../../assets/projects/ruuwear-mark.png";
 import workloaderMark from "../../assets/projects/workloader-mark.png";
-import { projectImage } from "../../lib/project-images";
 import { getProjects } from "../../lib/projects";
 
 export async function getStaticPaths() {
@@ -78,39 +77,14 @@ function paragraphs(text: string) {
   </header>
 
   {
-    project.data.slug !== "ruuwear" && project.data.slug !== "workloader" && (
+    shots.length === 0 && (
       <div class="case-cover">
         <ProjectCover motif={project.data.motif} index={position} />
       </div>
     )
   }
 
-  {
-    (project.data.slug === "workloader" || project.data.slug === "ruuwear") && shots.length > 0 && (
-      <ShotStack shots={shots} />
-    )
-  }
-  {
-    project.data.slug !== "workloader" && project.data.slug !== "ruuwear" && shots.length > 0 && (
-      <div class="case-shots">
-        {shots.map((shot, index) => (
-          <figure>
-            <ResponsiveImage
-              src={projectImage(shot.src)}
-              alt={shot.alt}
-              widths={[640, 960, 1440]}
-              sizes="(max-width: 720px) 92vw, min(1120px, 92vw)"
-              quality={85}
-              avifQuality={62}
-              priority={index === 0}
-              lightbox
-            />
-            <figcaption>{shot.label}</figcaption>
-          </figure>
-        ))}
-      </div>
-    )
-  }
+  {shots.length > 0 && <ShotStack shots={shots} />}
 
   <div class="case-row">
     <h2>The problem</h2>

@@ -8,7 +8,7 @@ const modules = import.meta.glob('../assets/projects/**/*.png', {
 const byFile = new Map<string, ImageMetadata>();
 
 for (const [path, image] of Object.entries(modules)) {
-  const file = path.split('/').pop();
+  const file = path.split(/[/\\]/).pop();
   if (file) byFile.set(file, image);
 }
 

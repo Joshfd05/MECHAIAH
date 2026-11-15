@@ -14,8 +14,14 @@ interface Props {
 }
 
 const { shots } = Astro.props;
-const shotSizes =
-  "(max-width: 720px) 92vw, (prefers-reduced-motion: reduce) min(1120px, 92vw), 480px";
+const frames = shots.map((shot) => ({
+  shot,
+  image: projectImage(shot.src),
+}));
+const portrait = frames.length > 0 && frames.every(({ image }) => image.height > image.width);
+const shotSizes = portrait
+  ? "(max-width: 860px) 56vw, 280px"
+  : "(max-width: 720px) 92vw, (prefers-reduced-motion: reduce) min(1120px, 92vw), 480px";
 
 function offsetFor(index: number, count: number) {
   let offset = index;
@@ -26,10 +32,10 @@ function offsetFor(index: number, count: number) {
 }
 ---
 
-<div class="shot-stack" data-shot-stack>
+<div class:list={["shot-stack", { "shot-stack--portrait": portrait }]} data-shot-stack>
   {
-    shots.map((shot, index) => {
-      const offset = offsetFor(index, shots.length);
+    frames.map(({ shot, image }, index) => {
+      const offset = offsetFor(index, frames.length);
       const away = Math.abs(offset) > 2;
       return (
         <button
@@ -43,7 +49,7 @@ function offsetFor(index: number, count: number) {
           tabindex={away ? -1 : 0}
         >
           <ResponsiveImage
-            src={projectImage(shot.src)}
+            src={image}
             alt=""
             widths={[640, 960, 1440]}
             sizes={shotSizes}
