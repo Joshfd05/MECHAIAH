@@ -1,7 +1,11 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProjectCover from "../../components/ProjectCover.astro";
+import ResponsiveImage from "../../components/ResponsiveImage.astro";
 import ShotStack from "../../components/ShotStack.astro";
+import ruuwearMark from "../../assets/projects/ruuwear-mark.png";
+import workloaderMark from "../../assets/projects/workloader-mark.png";
+import { projectImage } from "../../lib/project-images";
 import { getProjects } from "../../lib/projects";
 
 export async function getStaticPaths() {
@@ -41,14 +45,30 @@ function paragraphs(text: string) {
       {
         project.data.slug === "ruuwear" && (
           <span class="case-mark case-mark--wear">
-            <img src="/projects/ruuwear-mark.png" alt="" width="1040" height="1040" />
+            <ResponsiveImage
+              src={ruuwearMark}
+              alt=""
+              widths={[128, 256, 384]}
+              sizes="(max-width: 720px) 14vw, 102px"
+              quality={90}
+              avifQuality={68}
+              loading="eager"
+            />
           </span>
         )
       }
       {
         project.data.slug === "workloader" && (
           <span class="case-mark case-mark--work">
-            <img src="/projects/workloader-mark.png" alt="" width="1040" height="1040" />
+            <ResponsiveImage
+              src={workloaderMark}
+              alt=""
+              widths={[128, 256, 384]}
+              sizes="(max-width: 720px) 14vw, 102px"
+              quality={90}
+              avifQuality={68}
+              loading="eager"
+            />
           </span>
         )
       }
@@ -73,9 +93,18 @@ function paragraphs(text: string) {
   {
     project.data.slug !== "workloader" && project.data.slug !== "ruuwear" && shots.length > 0 && (
       <div class="case-shots">
-        {shots.map((shot) => (
+        {shots.map((shot, index) => (
           <figure>
-            <img src={shot.src} alt={shot.alt} />
+            <ResponsiveImage
+              src={projectImage(shot.src)}
+              alt={shot.alt}
+              widths={[640, 960, 1440]}
+              sizes="(max-width: 720px) 92vw, min(1120px, 92vw)"
+              quality={85}
+              avifQuality={62}
+              priority={index === 0}
+              lightbox
+            />
             <figcaption>{shot.label}</figcaption>
           </figure>
         ))}
@@ -102,10 +131,10 @@ function paragraphs(text: string) {
   {
     project.data.url && (
       <div class="case-row">
-        <h2>Live</h2>
+        <h2>{project.data.urlLabel ? "Launch" : "Live"}</h2>
         <p>
           <a class="text-link" href={project.data.url}>
-            Visit the live project
+            {project.data.urlLabel ?? "Visit the live project"}
           </a>
         </p>
       </div>
@@ -114,20 +143,23 @@ function paragraphs(text: string) {
 
   <nav class="pager" aria-label="Other projects">
     {
-      previous && (
-        <a href={`/projects/${previous.data.slug}`}>
-          <span>Previous</span>
-          <strong>{previous.data.title}</strong>
-        </a>
-      )
-    }
-    {
-      next && (
+      previous.data.slug !== next.data.slug ? (
+        <>
+          <a href={`/projects/${previous.data.slug}`}>
+            <span>Previous</span>
+            <strong>{previous.data.title}</strong>
+          </a>
+          <a href={`/projects/${next.data.slug}`}>
+            <span>Next</span>
+            <strong>{next.data.title}</strong>
+          </a>
+        </>
+      ) : previous.data.slug !== project.data.slug ? (
         <a href={`/projects/${next.data.slug}`}>
-          <span>Next</span>
+          <span>Other project</span>
           <strong>{next.data.title}</strong>
         </a>
-      )
+      ) : null
     }
   </nav>
 </BaseLayout>

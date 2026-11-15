@@ -4,7 +4,7 @@ slug: workloader
 tagline: Selected work
 outcome: Public case, held to what can be shared
 role: Mechaiah planned Workloader and built the version shown here
-summary: That meant deciding what the planner had to do for a normal week, laying out the screens a person moves through, and carrying the product through until someone can sign in and use it. Workloader is one of three selected projects.
+summary: That meant deciding what the planner had to do for a normal week, laying out the screens a person moves through, and carrying the product through until someone can sign in and use it.
 lede: Built for commercial use, so anyone can use it. A day-to-day tool that helps students, and anyone else, plan and manage their tasks.
 problem: |-
   Workloader was made for someone whose week does not fit in one notebook. Study, project deadlines, and things promised to other people were living in chats, scraps of paper, and memory. A plan written on Sunday was already wrong by Wednesday, and nothing sent a reminder when a date slipped.

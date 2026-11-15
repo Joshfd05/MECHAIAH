@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ProjectCover from "../components/ProjectCover.astro";
+import ResponsiveImage from "../components/ResponsiveImage.astro";
+import logo from "../assets/brand/logo-on-dark.png";
 import { processSteps, serviceLines, site } from "../data/site";
 import { getProjects } from "../lib/projects";
 
@@ -27,12 +29,15 @@ const projects = await getProjects();
           </a>
           <a class="btn btn--ghost" href="/projects">View projects</a>
         </div>
-        <img
+        <ResponsiveImage
           class="hero-logo"
-          src="/brand/logo-on-dark.png"
+          src={logo}
           alt="Mechaiah"
-          width="260"
-          height="167"
+          widths={[270, 540, 810]}
+          sizes="270px"
+          quality={90}
+          avifQuality={68}
+          priority
         />
       </div>
     </div>

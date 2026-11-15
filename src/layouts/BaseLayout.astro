@@ -20,14 +20,17 @@ const documentTitle =
   title === site.name
     ? `${site.name} — Websites and custom software`
     : `${title} — ${site.name}`;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
+const origin = Astro.site ?? Astro.url;
+const canonical = new URL(Astro.url.pathname, origin);
+const ogImage = new URL("/og.png", origin);
+const ogImageAlt = `${site.name} — websites and custom software`;
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   name: site.name,
   description: site.description,
   email: site.email,
-  url: Astro.site?.href ?? canonical.origin,
+  url: origin.href,
   sameAs: site.socials.map((item) => item.href),
 };
 ---
@@ -39,13 +42,22 @@ const jsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{documentTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    <link rel="canonical" href={canonical.href} />
     <link rel="icon" href="/favicon.png" type="image/png" />
     <meta name="theme-color" content="#06141B" />
     <meta property="og:title" content={documentTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonical} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={ogImage.href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={documentTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage.href} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>

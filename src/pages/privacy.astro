@@ -1,0 +1,68 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+---
+
+<BaseLayout
+  title="Privacy"
+  description="How Mechaiah handles the name, email, and message you send through the quotation form."
+>
+  <header class="page-head page-head--copy">
+    <p class="kicker">Privacy</p>
+    <h1>Privacy policy.</h1>
+    <p class="lede">
+      How {site.name} handles the information you send us. Last updated 15 November 2026.
+    </p>
+  </header>
+
+  <div class="legal">
+    <section>
+      <h2>Who we are</h2>
+      <p>
+        {site.name} is a software development studio in Sri Lanka. Questions about your information go to
+        <a href={`mailto:${site.email}`}>{site.email}</a>.
+      </p>
+    </section>
+
+    <section>
+      <h2>What this site collects</h2>
+      <p>
+        The pages themselves do not use analytics, advertising, or tracking cookies. Visiting a page does not add you to a list.
+      </p>
+      <p>
+        The quotation form asks for your name, email address, company if you include one, the kind of work, a description of the work, a timeline, and a budget range if you choose one.
+      </p>
+    </section>
+
+    <section>
+      <h2>How the form is handled</h2>
+      <p>
+        The form is sent to Web3Forms, which processes those details and delivers them to us by email at {site.email}. We use them to reply with questions or a quotation, and to do the work if you ask us to proceed.
+      </p>
+      <p>
+        We keep that correspondence so we can do the work and keep a record of what was agreed. We do not sell it.
+      </p>
+    </section>
+
+    <section>
+      <h2>Personal Data Protection Act</h2>
+      <p>
+        We handle personal information in line with Sri Lanka's Personal Data Protection Act No. 9 of 2022. You can email {site.email} to ask what we hold about you, to ask for a correction, or to ask us to delete it where the Act allows.
+      </p>
+    </section>
+
+    <section>
+      <h2>Hosting</h2>
+      <p>
+        The site is hosted on Netlify, which serves the pages. We do not add our own analytics on top of that.
+      </p>
+    </section>
+
+    <section>
+      <h2>Related</h2>
+      <p>
+        The terms for a piece of work are on the <a href="/terms">terms</a> page.
+      </p>
+    </section>
+  </div>
+</BaseLayout>
